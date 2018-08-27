@@ -6,4 +6,4 @@
 ##### 2.getOrElse returns the result inside the Some case of the Option, or if the Option is None, returns the given default value.
 ##### 3.orElse returns the first Option if it’s defined; otherwise, it returns the second Option.
 
-#####Note: watch out for refactoring opportunities.
+##### **Note:** watch out for refactoring opportunities.
