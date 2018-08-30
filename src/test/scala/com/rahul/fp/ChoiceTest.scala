@@ -11,11 +11,11 @@ class ChoiceTest extends WordSpec with Matchers {
       }
 
       "None to None" in {
-        None.map(_ => "Hello") shouldBe None
+        None.map(_ => "Hello") shouldBe "Hello"
       }
 
       "Something(null) to None" in {
-        Something(null).map(_ => "Hello") shouldBe None
+        Something(null).map(_ => "Hello") shouldBe Something("Hello")
       }
     }
 
@@ -25,11 +25,11 @@ class ChoiceTest extends WordSpec with Matchers {
       }
 
       "None to None" in {
-        None.flatMap(_ => Something("Hello")) shouldBe None
+        None.flatMap(_ => Something("Hello")) shouldBe Something("Hello")
       }
 
       "Something(null) to None" in {
-        Something(null).flatMap(_ => Something("Hello")) shouldBe None
+        Something(null).flatMap(_ => Something("Hello")) shouldBe Something("Hello")
       }
     }
 
@@ -72,11 +72,11 @@ class ChoiceTest extends WordSpec with Matchers {
       }
 
       "Something(null) to None" in {
-        Something(null).filter(_ => true) shouldBe None
+        Something(null).filter(_ => true) shouldBe Something(null)
       }
 
       "Something(None) to None" in {
-        Something(None).filter(_ => true) shouldBe None
+        Something(None).filter(_ => true) shouldBe Something(None)
       }
     }
 
