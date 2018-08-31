@@ -9,6 +9,10 @@ sealed trait Choice[+A] {
   def get: A
 }
 
+object Choice {
+  def apply[A](element: A): Choice[A] = ???
+}
+
 object None extends Choice[Nothing] {
   override def map[B](f: Nothing => B): Choice[B] = ???
 

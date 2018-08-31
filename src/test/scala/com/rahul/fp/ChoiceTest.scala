@@ -6,83 +6,83 @@ class ChoiceTest extends WordSpec with Matchers {
 
   "Choice" can {
     "map" should {
-      "Something(Int) to Something(String)" in {
-        Something(10).map(e => s"You entered value : $e") shouldBe Something("You entered value : 10")
+      "Choice(Int) to Something(String)" in {
+        Choice(10).map(e => s"You entered value : $e") shouldBe Something("You entered value : 10")
       }
 
       "None to None" in {
-        None.map(_ => "Hello") shouldBe "Hello"
+        None.map(e => s"${e}") shouldBe None
       }
 
-      "Something(null) to None" in {
-        Something(null).map(_ => "Hello") shouldBe Something("Hello")
+      "Choice(null) to None" in {
+        Choice(null).map(e => s"${e}") shouldBe None
       }
     }
 
     "flatMap" should {
-      "Something(Int) to Something(String)" in {
-        Something(10).flatMap(e => Something(s"You entered value : $e")) shouldBe Something("You entered value : 10")
+      "Choice(Int) to Something(String)" in {
+        Choice(10).flatMap(e => Something(s"You entered value : $e")) shouldBe Something("You entered value : 10")
       }
 
       "None to None" in {
-        None.flatMap(_ => Something("Hello")) shouldBe Something("Hello")
+        None.flatMap(e => Something(e)) shouldBe None
       }
 
-      "Something(null) to None" in {
-        Something(null).flatMap(_ => Something("Hello")) shouldBe Something("Hello")
+      "Choice(null) to None" in {
+        Choice(null).flatMap(e => Something(e)) shouldBe None
       }
     }
 
 
     "getOrElse" should {
-      "Something(element: String) to element" in {
-        Something("Hello World!").getOrElse("No World!") shouldBe "Hello World!"
+      "Choice(element: String) to element" in {
+        Choice("Hello World!").getOrElse("No World!") shouldBe "Hello World!"
       }
 
-      "Something(null) to default value" in {
-        Something(null).getOrElse("No World!") shouldBe "No World!"
+      "Choice(null) to default value" in {
+        Choice(null).getOrElse("No World!") shouldBe "No World!"
       }
 
-      "Something(None) to None" in {
-        Something(None).flatMap(_ => Something("Hello")) shouldBe None
+      "Choice(None) to 'No Value'" in {
+        Choice(None).getOrElse("No Value") shouldBe "No Value"
       }
     }
 
     "orElse" should {
-      "Something(element: String) to Something(element)" in {
-        Something("Hello World!").orElse(Something("No World!")) shouldBe Something("Hello World!")
+      "Choice(element: String) to Something(element)" in {
+        Choice("Hello World!").orElse(Something("No World!")) shouldBe Something("Hello World!")
       }
 
-      "Something(null) to default Something(default_value)" in {
-        Something(null).orElse(Something("No World!")) shouldBe Something("No World!")
+      "Choice(null) to default Something(default_value)" in {
+        Choice(null).orElse(Something("No World!")) shouldBe Something("No World!")
       }
 
-      "Something(None) to Something(default_value)" in {
-        Something(None).orElse(Something("No World!")) shouldBe Something("No World!")
+      "Choice(None) to Something(None)" in {
+        Choice(None).orElse(Something("No World!")) shouldBe Something(None)
       }
     }
 
     "filter" should {
       "return the output with string when condition is met" in {
-        Something("Hello World!").filter(e => e.contains("Hello")).map(e => s"Welcome to $e") shouldBe Something("Welcome to Hello World!")
+        Choice("Hello World!").filter(e => e.contains("Hello")).map(e => s"Welcome to $e") shouldBe Something("Welcome to Hello World!")
       }
 
       "return None when condition is met" in {
-        Something("Hello World!").filter(e => e.contains("zzzz")).map(e => s"Welcome to $e") shouldBe None
+        Choice("Hello World!").filter(e => e.contains("zzzz")).map(e => s"Welcome to $e") shouldBe None
       }
 
-      "Something(null) to None" in {
-        Something(null).filter(_ => true) shouldBe Something(null)
+      "Choice(null) to None" in {
+        Choice(null).filter(_ => true) shouldBe None
       }
 
-      "Something(None) to None" in {
-        Something(None).filter(_ => true) shouldBe Something(None)
+      "Choice(None) to None" in {
+        Choice(None).filter(_ => true) shouldBe Something(None)
       }
     }
 
     "get" should {
       "return the element" in {
-        Something("Hello World!").get shouldBe "Hello World!"
+        Choice("Hello World!").get shouldBe "Hello World!"
       }
 
       "throw exception when None.get" in {
