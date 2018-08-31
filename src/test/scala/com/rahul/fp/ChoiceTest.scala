@@ -43,8 +43,8 @@ class ChoiceTest extends WordSpec with Matchers {
         Choice(null).getOrElse("No World!") shouldBe "No World!"
       }
 
-      "Choice(None) to 'No Value'" in {
-        Choice(None).getOrElse("No Value") shouldBe "No Value"
+      "Choice(None) to None" in {
+        Choice(None).getOrElse("No Value") shouldBe None
       }
     }
 
