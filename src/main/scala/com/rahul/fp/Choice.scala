@@ -22,7 +22,7 @@ object None extends Choice[Nothing] {
 
   override def orElse[B >: Nothing](op: => Choice[B]): Choice[B] = ???
 
-  override def filter(f: Nothing => Boolean): Choice[A] = ???
+  override def filter(f: Nothing => Boolean): Choice[Nothing] = ???
 
   override def get = ???
 }
