@@ -14,6 +14,10 @@ class ChoiceTest extends WordSpec with Matchers {
         None.map(e => s"${e}") shouldBe None
       }
 
+      "Choice(None) to None" in {
+        Choice(None).map(e => s"${e}") shouldBe Something(None)
+      }
+
       "Choice(null) to None" in {
         Choice(null).map(e => s"${e}") shouldBe None
       }
@@ -31,8 +35,15 @@ class ChoiceTest extends WordSpec with Matchers {
       "Choice(null) to None" in {
         Choice(null).flatMap(e => Something(e)) shouldBe None
       }
-    }
 
+      "Choice(None) to Something(None)" in {
+        Choice(None).flatMap(e => Something(e)) shouldBe Something(None)
+      }
+
+      "Choice(None) to Something(String)" in {
+        Choice(None).flatMap(_ => Something("Hello")) shouldBe Something("Hello")
+      }
+    }
 
     "getOrElse" should {
       "Choice(element: String) to element" in {
@@ -45,6 +56,10 @@ class ChoiceTest extends WordSpec with Matchers {
 
       "Choice(None) to None" in {
         Choice(None).getOrElse("No Value") shouldBe None
+      }
+
+      "None to Something(default_value)" in {
+        None.getOrElse(Something("Hello")) shouldBe Something("Hello")
       }
     }
 
@@ -59,6 +74,10 @@ class ChoiceTest extends WordSpec with Matchers {
 
       "Choice(None) to Something(None)" in {
         Choice(None).orElse(Something("No World!")) shouldBe Something(None)
+      }
+
+      "None to Something(default_value)" in {
+        None.orElse(Something("No World!")) shouldBe Something("No World!")
       }
     }
 
@@ -78,11 +97,19 @@ class ChoiceTest extends WordSpec with Matchers {
       "Choice(None) to None" in {
         Choice(None).filter(_ => true) shouldBe Something(None)
       }
+
+      "None to None" in {
+        None.filter(_ => true) shouldBe None
+      }
     }
 
     "get" should {
       "return the element" in {
         Choice("Hello World!").get shouldBe "Hello World!"
+      }
+
+      "return None" in {
+        Choice(None).get shouldBe None
       }
 
       "throw exception when None.get" in {
